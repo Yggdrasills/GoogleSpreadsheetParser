@@ -1,0 +1,65 @@
+.box-container {
+    padding: 10px;
+    margin: 10px;
+    border-width: 1px;
+    border-color: rgb(128, 128, 128);
+}
+
+.spreadsheet-element {
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+.spreadsheet-header {
+    flex-direction: row;
+    align-items: center;
+    padding: 5px;
+}
+
+.sheet-element {
+    flex-direction: row;
+    align-items: center;
+    padding: 5px;
+    height: 30px;
+}
+
+.sheet-toggle {
+    width: 50px;
+    margin-left: 15px;
+}
+
+.button-container {
+    width: 24px;
+}
+
+.icon-button {
+    width: 24px;
+    height: 24px;
+}
+
+.icon-button > Image {
+    width: 100%;
+    height: 100%;
+}
+
+.download-button {
+    width: 100px;
+    height: 20px;
+}
+
+.control-button {
+    height: 20px;
+    width: 150px;
+}
+
+.verify-button {
+    width: 150px;
+    height: 20px;
+    flex-direction: row;
+}
+
+.verify-button > Image {
+    width: 16px;
+    height: 16px;
+    margin-left: 5px;
+}

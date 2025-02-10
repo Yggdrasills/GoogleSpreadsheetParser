@@ -1,0 +1,25 @@
+﻿{
+  "name": "com.yggdrasills.googlespreadsheetparser",
+  "version": "1.0.0",
+  "displayName": "Google Spreadsheet Parser",
+  "description": "Google sheets to json files parsing utility",
+  "unity": "2022.3",
+  "keywords": [
+    "google",
+    "spreadsheet",
+    "parser",
+    "google spreadsheet parser",
+    "table",
+    "sheet",
+    "editor",
+    "unity",
+    "tool"
+  ],
+  "author": {
+    "name": "Yggdrasills",
+    "email": "khamrokamalov@gmail.com"
+  },
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "3.2.1"
+  }
+}

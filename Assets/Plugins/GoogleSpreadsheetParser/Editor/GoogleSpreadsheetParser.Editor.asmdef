@@ -1,0 +1,16 @@
+{
+    "name": "GoogleSpreadsheetParser.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GoogleSpreadsheetParser.Runtime"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
