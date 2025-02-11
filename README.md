@@ -9,7 +9,7 @@ Google spreadsheets parsing utility
   - [As Unity Package](#-as-unity-package)
   - [Via UPM](#-via-upm)
 - [Google AppScript Publishing](#google-appscript-publishing)
-- [Gettings Started](#gettings-started)
+- [Getting Started](#getting-started)
   - [Settings](#settings)
   - [Index.json](#indexjson)
 - [Built-in Parsers](#built-in-parsers)
@@ -62,7 +62,7 @@ https://github.com/Yggdrasills/GoogleSpreadsheetParser.git?path=Assets/Plugins/G
 
 ![Web App url](https://github.com/Yggdrasills/GoogleSpreadsheetParser/blob/master/raw/images/app_script_get_web_app_url.png)
 
-# Gettings Started
+# Getting Started
 ## Settings
 ❗ When you first open (`Tools > Google Spreadsheets Parser`),  it automatically creates a `GoogleSpreadsheetSettings` asset in your `Resources` folder
 
@@ -98,7 +98,7 @@ Key settings to configure:
 **Example**
 ```
 {
-  "Exapmle Spreadsheet 1": {
+  "Example Spreadsheet 1": {
     "spreadsheet_id": "your_spreadsheet_id",
     "sheets": {
       "Page1": {
@@ -109,7 +109,7 @@ Key settings to configure:
       }
     }
   },
-  "Exapmle Spreadsheet 2": {
+  "Example Spreadsheet 2": {
     "spreadsheet_id": "your_spreadsheet_id",
     "sheets": {
       "Page1": {
@@ -194,7 +194,7 @@ Armor    | item_3  | Shield  | 50
   }
 }
 ```
-### KeyValue
+### Key-Value
 The key-value parser ("type": "key_value") expects two columns: key and value
 
 **Input spreadsheet:**
