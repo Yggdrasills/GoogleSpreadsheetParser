@@ -215,7 +215,7 @@ start_level   | 1
 ```
 
 # Custom Parser
-Implement custom parsers by inheriting from `ISpreadsheetParser` or `SpreadsheetParserBase`. See [Custom Parser Documentation](https://github.com/Yggdrasills/GoogleSpreadsheetParser/edit/master/custom-parser.md) for details.
+Implement custom parsers by inheriting from `ISpreadsheetParser` or `SpreadsheetParserBase`. See [Custom Parser Documentation](https://github.com/Yggdrasills/GoogleSpreadsheetParser/blob/master/CustomParser.md) for details.
 
 # Serializer
 The plugin uses a JSON serializer that can be customized by implementing the `ISheetSerializer` interface:
