@@ -16,6 +16,7 @@ Google spreadsheets parsing utility
   - [Default](#default)
   - [Complex](#complex)
   - [KeyValue](#key-value)
+- [Custom Parser](#custom-parser)
 - [Serializer](#serializer)
 
 # Overview
@@ -212,6 +213,9 @@ start_level   | 1
   "start_level": 1
 }
 ```
+
+# Custom Parser
+Implement custom parsers by inheriting from `ISpreadsheetParser` or `SpreadsheetParserBase`. See [Custom Parser Documentation](https://github.com/Yggdrasills/GoogleSpreadsheetParser/edit/master/custom-parser.md) for details.
 
 # Serializer
 The plugin uses a JSON serializer that can be customized by implementing the `ISheetSerializer` interface:
