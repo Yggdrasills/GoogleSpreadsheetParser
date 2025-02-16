@@ -50,6 +50,11 @@ The parser requires following dependency: `Newtonsoft.Json Unity Package (com.un
 https://github.com/Yggdrasills/GoogleSpreadsheetParser.git?path=Assets/Plugins/GoogleSpreadsheetParser
 ```
 - Click Add to install the package
+### ⭐ Manifest.json
+- Paste dependency:
+```
+"com.yggdrasills.googlespreadsheetparser": "https://github.com/Yggdrasills/GoogleSpreadsheetParser.git?path=Assets/Plugins/GoogleSpreadsheetParser"
+```
 # Google AppScript Publishing
 - Make copy of following [app script](https://script.google.com/home/projects/1Wh8-CvTk8GGg-F2tXN27n-WOOOFvN9vc0cmabA2wdgsm8zro4Fh9lPW4/edit) to your disk
 
