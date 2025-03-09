@@ -68,13 +68,15 @@ https://github.com/Yggdrasills/GoogleSpreadsheetParser.git?path=Assets/Plugins/G
 
 ![Web App url](https://github.com/Yggdrasills/GoogleSpreadsheetParser/blob/master/raw/images/app_script_get_web_app_url.png)
 
+***Note:** After copying the app script, you may see a "Bad Request" page appear. This is normal - the file is still copied successfully to your Google account. Please check your Google Drive or App Scripts directory to find and access your new copy.*
+
 # Getting Started
 ## Settings
 ❗ When you first open (`Tools > Google Spreadsheets Parser`),  it automatically creates a `GoogleSpreadsheetSettings` asset in your `Resources` folder
 
 Key settings to configure:
 - Web Service URL: The URL from your Google AppScript
-- Index File Path: Location of your `index.json` file (relative to Assets)
+- Index Folder Path: Location of your `index.json` file (relative to Assets). ❗ Important: You need to manually create the `index.json` file at this specified path
 - Downloads Path: Destination folder for generated JSON files (relative to Assets)
 
 ![Settings](https://github.com/Yggdrasills/GoogleSpreadsheetParser/blob/master/raw/images/settings.png)
@@ -120,9 +122,6 @@ Key settings to configure:
     "sheets": {
       "Page1": {
         "type": "complex"
-      },
-      "Page2": {
-        "type": "key_value"
       }
     }
   }
@@ -138,21 +137,19 @@ The default parser ("type": "default") creates a simple key-value structure usin
 **Input spreadsheet:**
 id      | name    | value
 --------|---------|-------
-item_1  | Sword   | 100
-item_2  | Shield  | 50
+item_1  | Sword   | 100.5
+item_2  | Shield  | 50.45
 
 **Output JSON:**
 ```
 {
   "item_1": {
-    "id": "item_1",
     "name": "Sword",
-    "value": 100
+    "value": 100.5
   },
   "item_2": {
-    "id": "item_2",
     "name": "Shield",
-    "value": 50
+    "value": 50.45
   }
 }
 ```
@@ -160,7 +157,7 @@ item_2  | Shield  | 50
 The complex parser ("type": "complex") handles hierarchical data with categories
 
 **Input spreadsheet:**
-category | id      | name    | value
+id       | item_id | name    | value
 ---------|---------|---------|-------
 Weapons  | item_1  | Sword   | 100
 ‎         | item_2  | Axe     | 75
@@ -170,52 +167,30 @@ Armor    | item_3  | Shield  | 50
 **Output JSON:**
 ```
 {
-  "Weapons": {
-    "children": [
-      {
-        "id": "item_1",
-        "name": "Sword",
-        "value": 100
-      },
-      {
-        "id": "item_2",
-        "name": "Axe",
-        "value": 75
-      }
-    ]
-  },
-  "Armor": {
-    "children": [
-      {
-        "id": "item_3",
-        "name": "Shield",
-        "value": 50
-      },
-      {
-        "id": "item_4",
-        "name": "Helmet",
-        "value": 25
-      }
-    ]
-  }
-}
-```
-### Key-Value
-The key-value parser ("type": "key_value") expects two columns: key and value
-
-**Input spreadsheet:**
-key           | value
---------------|-------
-player_speed  | 5.5
-max_health    | 100
-start_level   | 1
-
-**Output JSON:**
-```
-{
-  "player_speed": 5.5,
-  "max_health": 100,
-  "start_level": 1
+  "Weapons": [
+    {
+      "item_id": "item_1",
+      "name": "Sword",
+      "value": 100
+    },
+    {
+      "item_id": "item_2",
+      "name": "Axe",
+      "value": 75
+    }
+  ],
+  "Armor": [
+    {
+      "item_id": "item_3",
+      "name": "Shield",
+      "value": 50
+    },
+    {
+      "item_id": "item_4",
+      "name": "Helmet",
+      "value": 25
+    }
+  ]
 }
 ```
 
@@ -259,12 +234,10 @@ item_2  | armor,common     | 50,75
 ```
 {
   "item_1": {
-    "id": "item_1",
     "tags": ["weapon", "rare"],
     "values": [100, 150, 200]
   },
   "item_2": {
-    "id": "item_2",
     "tags": ["armor", "common"],
     "values": [50, 75]
   }
