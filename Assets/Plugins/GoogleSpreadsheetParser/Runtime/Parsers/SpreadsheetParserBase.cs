@@ -1,42 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Yggdrasil.GoogleSpreadsheet
 {
     public abstract class SpreadsheetParserBase : ISpreadsheetParser
     {
-        SheetData ISpreadsheetParser.Parse(List<List<object>> data)
+        SheetData ISpreadsheetParser.Parse(List<List<object>> rows)
         {
-            ValidateData(data);
-            return ParseInternal(data);
+            ValidateData(rows);
+            return ParseInternal(rows);
         }
 
-        protected abstract SheetData ParseInternal(List<List<object>> data);
+        protected abstract SheetData ParseInternal(List<List<object>> rows);
 
-        protected virtual void ValidateData(List<List<object>> data)
+        protected virtual void ValidateData(List<List<object>> rows)
         {
-            if (data == null) throw new ArgumentNullException(nameof(data));
-            if (data.Count < 2) throw new ArgumentException("Data must contain header row and at least one data row");
-            if (data[0] == null || !data[0].Any()) throw new ArgumentException("Header row cannot be empty");
+            if (rows.Count < 2)
+                throw new ArgumentException("Data must contain header row and at least one data row");
+
+            var headerRow = rows[0];
+            for (var index = 0; index < headerRow.Count; index++)
+            {
+                if (string.IsNullOrWhiteSpace(headerRow[index].ToString()))
+                {
+                    throw new ArgumentException("Header cell by index " + index + " cannot be empty");
+                }
+            }
         }
 
         protected virtual Dictionary<string, object> ParseRow(List<object> row, List<object> headers)
         {
             var result = new Dictionary<string, object>();
 
-            for (var i = 0; i < Math.Min(row.Count, headers.Count); i++)
+            var rowLenght = Math.Min(row.Count, headers.Count);
+
+            for (var i = 0; i < rowLenght; i++)
             {
                 var header = headers[i]?.ToString()?.Trim();
-                if (string.IsNullOrEmpty(header)) continue;
+
+                if (string.IsNullOrWhiteSpace(header))
+                    continue;
 
                 if (header.EndsWith("[]"))
                 {
-                    result[header.Replace("[]", "")] = ParseArray(row[i]);
+                    var value = ParseArray(row[i]);
+                    if (value.Count > 0)
+                        result[header.Substring(0, header.Length - 2)] = value;
                 }
                 else
                 {
-                    result[header] = ParseValue(row[i]);
+                    var value = ParseValue(row[i]);
+                    if (!string.IsNullOrEmpty(value.ToString()))
+                        result[header] = value;
                 }
             }
 
@@ -48,7 +63,7 @@ namespace Yggdrasil.GoogleSpreadsheet
             return SpreadsheetsParserUtilities.ParseValue(value);
         }
 
-        protected virtual IEnumerable<object> ParseArray(object value)
+        protected virtual IReadOnlyList<object> ParseArray(object value)
         {
             return SpreadsheetsParserUtilities.ParseArray(value);
         }

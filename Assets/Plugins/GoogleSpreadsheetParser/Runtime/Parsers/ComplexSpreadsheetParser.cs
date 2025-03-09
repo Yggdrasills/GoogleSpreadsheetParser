@@ -8,34 +8,47 @@ namespace Yggdrasil.GoogleSpreadsheet
     [SpreadsheetParser("complex")]
     public class ComplexSpreadsheetParser : SpreadsheetParserBase
     {
-        protected override SheetData ParseInternal(List<List<object>> data)
+        protected override SheetData ParseInternal(List<List<object>> rows)
         {
-            var root = new SheetData { Children = new List<SheetData>() };
-            SheetData currentCategory = null;
+            var root = new SheetData { Values = new Dictionary<string, object>() };
+            string currentCategory = null;
+            List<Dictionary<string, object>> currentCategoryItems = null;
 
-            for (var i = 1; i < data.Count; i++)
+            for (var i = 1; i < rows.Count; i++)
             {
-                var row = data[i];
+                var row = rows[i];
 
-                if (row == null || !row.Any())
+                if (row.All(cell => string.IsNullOrWhiteSpace(cell.ToString())))
                     continue;
 
-                var categoryName = row[0]?.ToString()?.Trim();
-                if (!string.IsNullOrEmpty(categoryName))
+                var firstCell = row[0]?.ToString()?.Trim();
+
+                if (!string.IsNullOrEmpty(firstCell))
                 {
-                    currentCategory = new SheetData
+                    currentCategory = firstCell;
+                    currentCategoryItems = new List<Dictionary<string, object>>();
+                    root.Values[currentCategory] = currentCategoryItems;
+
+                    if (row.Count > 1)
                     {
-                        Key = categoryName,
-                        Children = new List<SheetData>()
-                    };
-                    root.Children.Add(currentCategory);
+                        var rowValues = ParseRow(row.Skip(1).ToList(), rows[0].Skip(1).ToList());
+                        if (rowValues.Count > 0)
+                        {
+                            currentCategoryItems.Add(rowValues);
+                        }
+                    }
+
                     continue;
                 }
 
-                currentCategory?.Children.Add(new SheetData
+                if (currentCategory != null)
                 {
-                    Values = ParseRow(row.Skip(1).ToList(), data[0].Skip(1).ToList())
-                });
+                    var rowValues = ParseRow(row.Skip(1).ToList(), rows[0].Skip(1).ToList());
+                    if (rowValues.Count > 0)
+                    {
+                        currentCategoryItems.Add(rowValues);
+                    }
+                }
             }
 
             return root;

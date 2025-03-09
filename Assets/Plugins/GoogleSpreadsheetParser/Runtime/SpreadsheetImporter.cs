@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using UnityEngine;
 
 namespace Yggdrasil.GoogleSpreadsheet
 {
@@ -31,23 +32,31 @@ namespace Yggdrasil.GoogleSpreadsheet
 
         internal void Import(Sheet sheet, List<List<object>> data)
         {
-            if (string.IsNullOrEmpty(_settings.DownloadsFolderPath))
-                throw new Exception("Downloads folder path is not set");
+            try
+            {
+                if (string.IsNullOrEmpty(_settings.DownloadsFolderPath))
+                    throw new Exception("Downloads folder path is not set");
 
-            if (!Directory.Exists(_settings.DownloadsFolderPath))
-                Directory.CreateDirectory(_settings.DownloadsFolderPath);
+                if (!Directory.Exists(_settings.DownloadsFolderPath))
+                    Directory.CreateDirectory(_settings.DownloadsFolderPath);
 
-            var parser = _parsers.GetValueOrDefault(sheet.Type);
+                var parser = _parsers.GetValueOrDefault(sheet.Type);
 
-            if (parser == null)
-                throw new Exception($"Not found parser type {sheet.Type} for sheet {sheet.Name}");
+                if (parser == null)
+                    throw new Exception($"Not found parser type {sheet.Type} for sheet {sheet.Name}");
 
-            var sheetData = parser.Parse(data);
-            var serialized = _serializer.Serialize(sheetData);
+                var sheetData = parser.Parse(data);
+                var serialized = _serializer.Serialize(sheetData);
 
-            var filePath = Path.Combine(_settings.DownloadsFolderPath, $"{sheet.Name}.json");
+                var filePath = Path.Combine(_settings.DownloadsFolderPath, $"{sheet.Name}.json");
 
-            File.WriteAllText(filePath, serialized);
+                File.WriteAllText(filePath, serialized);
+            }
+            catch (Exception)
+            {
+                Debug.LogError("Failed to import sheet " + sheet.Name);
+                throw;
+            }
         }
 
         private Dictionary<string, ISpreadsheetParser> GetAssemblyParsers()
