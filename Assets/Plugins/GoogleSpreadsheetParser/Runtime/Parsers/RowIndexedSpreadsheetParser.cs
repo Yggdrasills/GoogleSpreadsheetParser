@@ -5,8 +5,8 @@ using JetBrains.Annotations;
 namespace Yggdrasil.GoogleSpreadsheet
 {
     [UsedImplicitly]
-    [SpreadsheetParser("index-based")]
-    public class IndexBasedSpreadsheetParser : SpreadsheetParserBase
+    [SpreadsheetParser("row_indexed")]
+    public class RowIndexedSpreadsheetParser : SpreadsheetParserBase
     {
         protected override SheetData ParseInternal(List<List<object>> rows)
         {
